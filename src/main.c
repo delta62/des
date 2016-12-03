@@ -1,11 +1,7 @@
 #include <stdio.h>
 #include <stdint.h>
-#include "des.h"
+#include "binary.h"
 
-// #define setbit(l,k) (l |= (1 << (k % 64)))
-// #define clearbit(l,k) (l &= ~(1 << (k % 64)))
-// #define getbit(l,k) (l & (1 << (k % 64)))
-//
 // const uint8_t PC_1[] = {
 // 	0x39, 0x31, 0x29, 0x21, 0x19, 0x11, 0x09,
 // 	0x01, 0x3A, 0x32, 0x2A, 0x22, 0x1A, 0x12,
@@ -26,24 +22,10 @@
 // 	return ret;
 // }
 
-void printbinary(const void *ptr, size_t bytes)
-{
-	for (size_t i = bytes; i > 0;) {
-		uint8_t b = ((uint8_t *)ptr)[--i];
-		for (size_t j = 8; j > 0;) {
-			char c = (b & (1 << --j)) ? '1' : '0';
-			putchar(c);
-		}
-		if (i > 0) {
-			putchar(' ');
-		}
-	}
-}
-
 int main(int argc, char **argv)
 {
 	uint64_t k = 0x133457799BBCDFF1;
-	printbinary(&k, 8);
+	printbin(&k, 8);
 	putchar('\n');
 	return 0;
 }
