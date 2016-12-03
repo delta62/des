@@ -32,3 +32,7 @@
 *.dSYM/
 *.su
 *.swp
+CMakeFiles/
+cmake_install.cmake
+Makefile
+include/des.h
