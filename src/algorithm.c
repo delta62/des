@@ -24,10 +24,26 @@ uint64_t permutedkey(uint64_t key)
 	return ret;
 }
 
+uint64_t *genblocks(uint64_t pkey)
+{
+	printbin(pkey, 8);
+	uint32_t c = pkey >> 32 & 0xFFFFFFF0;
+	uint32_t d = (pkey & 0x000000FFFFFFFFF) >> 4;
+	printbin(c, 8);
+	printbin(d, 8);
+
+	return NULL;
+}
+
+uint64_t *genkeys(uint64_t *blocks)
+{
+	return 0x00;
+}
+
 uint64_t desencode(uint64_t key, uint64_t message)
 {
 	printbin(key, 8);
-	putchar('\n');
 	uint64_t p = permutedkey(key);
+	genblocks(p);
 	return 0x00;
 }

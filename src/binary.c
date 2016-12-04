@@ -11,4 +11,5 @@ void printbin(uint64_t n, size_t sep)
 		if (bit % sep == 0)
 			putchar(' ');
 	}
+	putchar('\n');
 }
