@@ -1,7 +1,6 @@
 #include "algorithm.h"
 #include "binary.h"
 #include <stdint.h>
-#include <stdio.h>
 
 const uint8_t PC1[] = {
 	0x39, 0x31, 0x29, 0x21, 0x19, 0x11, 0x09,
@@ -17,7 +16,7 @@ const uint8_t PC1[] = {
 uint64_t permutedkey(uint64_t key)
 {
 	uint64_t ret = 0;
-	for (uint8_t i = 0; i < 56; i++) {
+	for (size_t i = 0; i < 56; i++) {
 		if (GETBIT64(key, PC1[i]))
 			SETBIT64(ret, (i + 1));
 	}
@@ -26,8 +25,15 @@ uint64_t permutedkey(uint64_t key)
 
 uint64_t desencode(uint64_t key, uint64_t message)
 {
-	printbin(key, 8);
-	putchar('\n');
+	print64(key);
 	uint64_t p = permutedkey(key);
+	print64(key);
+	print56(key);
+
+	uint32_t c0 = p >> 36;
+	uint32_t d0 = p & 0xFFFFFFF;
+
+	print28(c0);
+	print28(d0);
 	return 0x00;
 }

@@ -6,15 +6,18 @@
 
 /**
  * 0x012345678
- * 0000 0001 0010 0011 0100 0101 0110 0111 [...]
- * ^  ^    ^                             ^
- * 1  4    8                             32
+ * 0000 0001 0010 0011 [...]
+ * ^  ^    ^         ^
+ * 1  4    8         16
  */
 
 #define GETBIT64(x,p) (x & (1ULL << (64 - p)))
 #define SETBIT64(x,p) (x |= (1ULL << (64 - p)))
-// #define CLRBIT(x,p) (x &= ~(1ULL << (63 - p)))
+#define GETBIT32(x,p) (x & (1UL << (32 - p)))
+#define ROL28(x,n) ((x << n) | ((x >> (32 - n)) & 0xFFF0))
 
-void printbin(uint64_t n, size_t sep);
+void print64(uint64_t n);
+void print56(uint64_t n);
+void print28(uint32_t n);
 
 #endif
