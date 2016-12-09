@@ -25,6 +25,17 @@ void print56(uint64_t n)
 	putchar('\n');
 }
 
+void print32(uint32_t n)
+{
+	for (size_t bit = 1; bit <= 32; bit++) {
+		char c = GETBIT32(n, bit) ? '1' : '0';
+		putchar(c);
+		if (bit % 8 == 0)
+			putchar(' ');
+	}
+	putchar('\n');
+}
+
 void print28(uint32_t n)
 {
 	for (size_t bit = 5; bit <= 32; bit++) {

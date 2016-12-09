@@ -25,15 +25,18 @@ uint64_t permutedkey(uint64_t key)
 
 uint64_t desencode(uint64_t key, uint64_t message)
 {
-	print64(key);
 	uint64_t p = permutedkey(key);
-	print64(p);
-	print56(p);
-
 	uint32_t c0 = p >> 28;
 	uint32_t d0 = p & 0xFFFFFFF;
 
 	print28(c0);
 	print28(d0);
+
+	uint32_t c1 = ROL28(c0, 1);
+	uint32_t d1 = ROL28(d0, 1);
+
+	print28(c1);
+	print28(d1);
+
 	return 0x00;
 }
