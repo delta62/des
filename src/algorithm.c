@@ -18,7 +18,7 @@ uint64_t permutedkey(uint64_t key)
 	uint64_t ret = 0;
 	for (size_t i = 0; i < 56; i++) {
 		if (GETBIT64(key, PC1[i]))
-			SETBIT64(ret, (i + 1));
+			SETBIT56(ret, (i + 1));
 	}
 	return ret;
 }
@@ -27,9 +27,10 @@ uint64_t desencode(uint64_t key, uint64_t message)
 {
 	print64(key);
 	uint64_t p = permutedkey(key);
+	print64(p);
 	print56(p);
 
-	uint32_t c0 = p >> 36;
+	uint32_t c0 = p >> 28;
 	uint32_t d0 = p & 0xFFFFFFF;
 
 	print28(c0);
