@@ -16,7 +16,7 @@
 // #define SETBIT64(x,p) ((x) |= (1ULL << (64 - (p))))
 #define SETBIT56(x,p) ((x) |= (1ULL << (56 - (p))))
 #define ROL28(x,n) ((((x) << (n)) | ((x) >> (28 - (n)))) & 0xFFFFFFF)
-#define COMBO28(x, y) ((x) << 28 | (y))
+#define COMBO28(x, y) (((x) | 0ULL) << 28 | (y))
 
 void print64(uint64_t n);
 void print56(uint64_t n);

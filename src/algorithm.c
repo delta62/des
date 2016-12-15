@@ -52,16 +52,14 @@ uint64_t desencode(uint64_t key, uint64_t message)
 		c0 = ROL28(c0, shift);
 		d0 = ROL28(d0, shift);
 
-		c[2 * i    ] = ROL28(c0, shift);
-		c[2 * i + 1] = ROL28(d0, shift);
+		c[2 * i    ] = c0;
+		c[2 * i + 1] = d0;
 	}
 
 	for (i = 0; i < 16; i++) {
-		print28(c[2 * i]);
-		print28(c[2 * i + 1]);
 		uint64_t tmp = COMBO28(c[2 * i], c[2 * i + 1]);
 		print56(tmp);
-		k[i] = 1;
+		k[i] = tmp;
 	}
 
 	return 0x00;
