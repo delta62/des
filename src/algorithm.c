@@ -30,7 +30,7 @@ uint64_t permutedkey(uint64_t key)
 	uint64_t ret = 0;
 	for (size_t i = 0; i < 56; i++) {
 		if (GETBIT64(key, PC1[i]))
-			SETBIT56(ret, (i + 1));
+			SETBIT56(ret, i + 1);
 	}
 	return ret;
 }
@@ -39,7 +39,6 @@ uint64_t desencode(uint64_t key, uint64_t message)
 {
 	size_t i;
 	uint64_t p = permutedkey(key);
-	uint32_t c[32];
 	uint32_t c0 = p >> 28;
 	uint32_t d0 = p & 0xFFFFFFF;
 	uint32_t k[16];
@@ -52,14 +51,16 @@ uint64_t desencode(uint64_t key, uint64_t message)
 		c0 = ROL28(c0, shift);
 		d0 = ROL28(d0, shift);
 
-		c[2 * i    ] = c0;
-		c[2 * i + 1] = d0;
-	}
+		uint64_t cndn = COMBO28(c0, d0);
+		uint64_t kn = 0;
+		for (size_t j = 0; j < 48; j++) {
+			if (GETBIT56(cndn, PC1[i]))
+				SETBIT48(kn, i + 1);
+		}
 
-	for (i = 0; i < 16; i++) {
-		uint64_t tmp = COMBO28(c[2 * i], c[2 * i + 1]);
-		print56(tmp);
-		k[i] = tmp;
+		print48(kn);
+
+		k[i] = kn;
 	}
 
 	return 0x00;
