@@ -146,6 +146,17 @@ static void genkeys(uint64_t key, uint64_t *keys)
 	}
 }
 
+static uint64_t f(uint32_t r, uint64_t k)
+{
+	uint64_t e = 0;
+	for (size_t i = 0; i < 48; i++) {
+		if (GETBIT32(r, E[i]))
+			SETBIT48(e, i + 1);
+	}
+
+	return 0x00;
+}
+
 uint64_t desencode(uint64_t key, uint64_t message)
 {
 	uint64_t k[16];
