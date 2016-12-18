@@ -14,6 +14,7 @@
 #define GETBIT64(x,p) ((x) & (1ULL << (64 - (p))))
 #define GETBIT56(x,p) ((x) & (1ULL << (56 - (p))))
 #define GETBIT32(x,p) ((x) & (1UL  << (32 - (p))))
+#define SETBIT64(x,p) ((x) |= (1ULL << (64 - (p))))
 #define SETBIT56(x,p) ((x) |= (1ULL << (56 - (p))))
 #define SETBIT48(x,p) ((x) |= (1ULL << (48 - (p))))
 #define ROL28(x,n) ((((x) << (n)) | ((x) >> (28 - (n)))) & 0xFFFFFFF)

@@ -1,7 +1,6 @@
 #include "algorithm.h"
 #include "binary.h"
 #include <stdint.h>
-#include <stdio.h>
 
 const uint8_t PC1[56] = {
 	0x39, 0x31, 0x29, 0x21, 0x19, 0x11, 0x09,
@@ -25,6 +24,17 @@ const uint8_t PC2[48] = {
 	0x2E, 0x2A, 0x32, 0x24, 0x1D, 0x20
 };
 
+const uint8_t IP[64] = {
+	0x3A, 0x32, 0x2A, 0x22, 0x1A, 0x12, 0x0A, 0x02,
+	0x3C, 0x34, 0x2C, 0x24, 0x1C, 0x14, 0x0C, 0x04,
+	0x3E, 0x36, 0x2E, 0x26, 0x1E, 0x16, 0x0E, 0x06,
+	0x40, 0x38, 0x30, 0x28, 0x20, 0x18, 0x10, 0x08,
+	0x39, 0x31, 0x29, 0x21, 0x19, 0x11, 0x09, 0x01,
+	0x3B, 0x33, 0x2B, 0x23, 0x1B, 0x13, 0x0B, 0x03,
+	0x3D, 0x35, 0x2D, 0x25, 0x1D, 0x15, 0x0D, 0x05,
+	0x3F, 0x37, 0x2F, 0x27, 0x1F, 0x17, 0x0F, 0x07
+};
+
 uint64_t permutedkey(uint64_t key)
 {
 	uint64_t ret = 0;
@@ -35,12 +45,20 @@ uint64_t permutedkey(uint64_t key)
 	return ret;
 }
 
-uint64_t desencode(uint64_t key, uint64_t message)
+uint64_t ip(uint64_t message)
 {
-	uint64_t p = permutedkey(key);
-	uint32_t c0 = p >> 28;
-	uint32_t d0 = p & 0xFFFFFFF;
-	uint32_t k[16];
+	uint64_t ret = 0;
+	for (size_t i = 0; i < 64; i++) {
+		if (GETBIT64(message, IP[i]))
+			SETBIT64(ret, i + 1);
+	}
+	return ret;
+}
+
+static void genkeys(uint64_t key, uint64_t *keys)
+{
+	uint32_t c0 = key >> 28;
+	uint32_t d0 = key & 0xFFFFFFF;
 
 	for (size_t i = 0; i < 16; i++) {
 		size_t shift = 2;
@@ -56,10 +74,17 @@ uint64_t desencode(uint64_t key, uint64_t message)
 			if (GETBIT56(cndn, PC2[j]))
 				SETBIT48(kn, j + 1);
 		}
-		print48(kn);
 
-		k[i] = kn;
+		keys[i] = kn;
 	}
+}
+
+uint64_t desencode(uint64_t key, uint64_t message)
+{
+	uint64_t k[16];
+	uint64_t p = permutedkey(key);
+	genkeys(p, k);
+	print64(ip(message));
 
 	return 0x00;
 }
