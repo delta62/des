@@ -149,9 +149,20 @@ static void genkeys(uint64_t key, uint64_t *keys)
 static uint64_t f(uint32_t r, uint64_t k)
 {
 	uint64_t e = 0;
-	for (size_t i = 0; i < 48; i++) {
+	size_t i;
+	for (i = 0; i < 48; i++) {
 		if (GETBIT32(r, E[i]))
 			SETBIT48(e, i + 1);
+	}
+
+	e = e ^ k;
+	print48(e);
+
+	uint32_t ret = 0;
+	for (i = 0; i < 8; i++) {
+		uint8_t b = e >> i & 0x3F;
+		uint8_t row = ((b & 32) >> 4) & (b & 1);
+		uint8_t col = b >> 1 & 3;
 	}
 
 	return 0x00;
